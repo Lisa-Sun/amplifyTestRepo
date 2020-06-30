@@ -1,0 +1,31 @@
+type Todo @model {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type Customer @model @key(fields: ["email"]) {
+  email: String!
+  username: String
+}
+
+type Item
+  @model
+  @key(fields: ["orderId", "status", "createdAt"])
+  @key(
+    name: "ByStatusAndCreatedAt"
+    fields: ["status", "createdAt"]
+    queryField: "itemsByStatusAndCreatedAt"
+  ) {
+  orderId: ID!
+  status: Status!
+  createdAt: AWSDateTime!
+  name: String!
+}
+
+enum Status {
+  DELIVERED
+  IN_TRANSIT
+  PENDING
+  UNKNOWN
+}
